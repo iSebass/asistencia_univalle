@@ -195,7 +195,21 @@ function handleAction(actionType) {
   records.push(newRecord);
   localStorage.setItem('attendance_records', JSON.stringify(records));
 
+  // Enviar a Google Sheets
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwnkBmEde9lYF-nLISNfvHsEDn7jpr54iODXDnWf_jK_vWkYLiC6H0CdYjDeksSb9I/exec';
+  fetch(scriptURL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'text/plain'
+    },
+    body: JSON.stringify(newRecord)
+  })
+  .then(() => console.log('Datos enviados a Google Sheets'))
+  .catch(err => console.error('Error al enviar a Google Sheets:', err));
+
   showStatus(`¡Registro de ${actionType} exitoso! Bienvenido/a ${student.nombre}.`, "success");
+
   
   // Reset form
   studentCodeInput.value = '';
