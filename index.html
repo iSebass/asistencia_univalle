@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de control de asistencia para estudiantes de la Universidad del Valle, Sede Tuluá.">
+    <title>Control de Asistencia - Univalle Tuluá</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts (Optional but recommended if connected) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo-mock">UV</div>
+            </div>
+            <h1>Asistencia Univalle</h1>
+            <p class="subtitle">Sede Tuluá - Villa Campestre</p>
+        </header>
+
+        <form id="attendance-form" onsubmit="event.preventDefault();">
+            <div class="form-group">
+                <label for="subject-select">Asignatura</label>
+                <select id="subject-select" required>
+                    <option value="" disabled selected>Selecciona una asignatura</option>
+                    <option value="Matematica Basica">Matemática Básica</option>
+                    <option value="Sistemas Embebidos">Sistemas Embebidos</option>
+                    <option value="Experimentacion en Electricidad">Experimentación en Electricidad</option>
+                    <option value="Robots - Ciencia - Ficcion">Robots - Ciencia - Ficción</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="student-code">Código Estudiantil</label>
+                <input type="text" id="student-code" placeholder="Ej. 202477198" required>
+            </div>
+
+            <div class="form-group">
+                <label for="student-email">Correo Institucional</label>
+                <input type="email" id="student-email" placeholder="usuario@correounivalle.edu.co" required>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" id="btn-checkin" class="btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                    Entrada
+                </button>
+                <button type="button" id="btn-checkout" class="btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4"></path><polyline points="14 17 9 12 14 7"></polyline><line x1="9" y1="12" x2="21" y2="12"></line></svg>
+                    Salida
+                </button>
+            </div>
+        </form>
+
+        <div id="status-message" class="status-box"></div>
+
+        <div class="info-display">
+            <div class="info-row">
+                <span>Fecha:</span>
+                <span id="current-date" class="info-value">--/--/----</span>
+            </div>
+            <div class="info-row">
+                <span>Hora:</span>
+                <span id="current-time" class="info-value">00:00:00</span>
+            </div>
+            <div class="info-row">
+                <span>Ubicación:</span>
+                <span id="location-status" class="info-value">Verificando...</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Load Data first, then App logic -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
