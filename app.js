@@ -205,3 +205,45 @@ function handleAction(actionType) {
 // Event Listeners
 btnCheckin.addEventListener('click', () => handleAction('Ingreso'));
 btnCheckout.addEventListener('click', () => handleAction('Salida'));
+
+// Export Logic
+const btnExport = document.getElementById('btn-export');
+btnExport.addEventListener('click', () => {
+  const subject = subjectSelect.value;
+  if (!subject) {
+    showStatus("Por favor selecciona una asignatura para exportar.", "error");
+    return;
+  }
+
+  const password = prompt("Ingresa la contraseña de profesor para descargar:");
+  if (password !== "profesor2026") {
+    alert("Contraseña incorrecta.");
+    return;
+  }
+
+  const records = JSON.parse(localStorage.getItem('attendance_records') || '[]');
+  const filteredRecords = records.filter(r => r.subject === subject);
+
+  if (filteredRecords.length === 0) {
+    alert("No hay registros para esta asignatura.");
+    return;
+  }
+
+  // Generate CSV
+  let csvContent = "Código,Nombre,Asignatura,Tipo,Fecha,Hora\n";
+  filteredRecords.forEach(r => {
+    csvContent += `${r.code},"${r.name}","${r.subject}",${r.type},"${r.date}",${r.time}\n`;
+  });
+
+  // Trigger download
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", `asistencia_${subject.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}.csv`);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
+
